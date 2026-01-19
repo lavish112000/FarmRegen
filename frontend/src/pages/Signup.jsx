@@ -4,6 +4,7 @@ import useAuthStore from '../store/authStore';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { Leaf, ArrowRight, Sprout } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Signup() {
     const [formData, setFormData] = useState({
@@ -48,11 +49,11 @@ export default function Signup() {
             {/* Left Side - Image/Brand */}
             <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-black">
                 <img
-                    src="/login-bg.png"
+                    src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=2070&auto=format&fit=crop"
                     alt="Satellite View of Fields"
                     className="absolute inset-0 w-full h-full object-cover opacity-80 scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-green-900/60 to-black/40 flex flex-col justify-between p-12">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-900/90 via-green-900/40 to-black/40 flex flex-col justify-between p-12">
                     <div>
                         <div className="flex items-center space-x-2 text-white mb-6">
                             <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
@@ -86,19 +87,24 @@ export default function Signup() {
             </div>
 
             {/* Right Side - Form */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50 md:px-12 overflow-y-auto">
-                <div className="w-full max-w-md space-y-8">
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50 dark:bg-slate-900 md:px-12 overflow-y-auto transition-colors duration-300">
+                <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full max-w-md space-y-8"
+                >
                     <div className="text-center lg:text-left">
-                        <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Create Account</h2>
-                        <p className="mt-2 text-gray-500">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Create Account</h2>
+                        <p className="mt-2 text-gray-500 dark:text-gray-400">
                             Get started with SoilSense in less than 2 minutes.
                         </p>
                     </div>
 
                     <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                         {(error || validationError) && (
-                            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-md">
-                                <p className="text-sm text-red-700">{error || validationError}</p>
+                            <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 rounded-r-md">
+                                <p className="text-sm text-red-700 dark:text-red-400">{error || validationError}</p>
                             </div>
                         )}
 
@@ -158,8 +164,8 @@ export default function Signup() {
 
                         <div className="flex items-center">
                             <input id="terms" name="terms" type="checkbox" className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" required />
-                            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
-                                I agree to the <a href="#" className="text-green-600 hover:text-green-500">Terms</a> and <a href="#" className="text-green-600 hover:text-green-500">Privacy Policy</a>
+                            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+                                I agree to the <a href="#" className="text-green-600 dark:text-green-400 hover:text-green-500">Terms</a> and <a href="#" className="text-green-600 dark:text-green-400 hover:text-green-500">Privacy Policy</a>
                             </label>
                         </div>
 
@@ -172,15 +178,15 @@ export default function Signup() {
                         </Button>
 
                         <div className="text-center mt-6">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
                                 Already have an account?{' '}
-                                <Link to="/login" className="font-semibold text-green-600 hover:text-green-500 transition-colors">
+                                <Link to="/login" className="font-semibold text-green-600 dark:text-green-400 hover:text-green-500 transition-colors">
                                     Sign in
                                 </Link>
                             </p>
                         </div>
                     </form>
-                </div>
+                </motion.div>
             </div>
         </div>
     );

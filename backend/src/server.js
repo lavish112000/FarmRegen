@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const { Client } = require('pg');
 require('dotenv').config();
 
 // Import middleware
@@ -48,22 +47,13 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Logging - use Winston stream
 app.use(morgan('combined', { stream: logger.stream }));
 
-// Database Connection
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-});
+// Database Connection - using pool from db.js
+const db = require('./config/db');
 
-const connectDB = async () => {
-    try {
-        await client.connect();
-        logger.info('Connected to PostgreSQL database');
-    } catch (err) {
-        logger.error('Database connection error:', err);
-    }
-};
-
-connectDB();
+// Test database connection on startup
+db.query('SELECT NOW()')
+    .then(() => logger.info('Connected to PostgreSQL database'))
+    .catch(err => logger.error('Database connection error:', err));
 
 const authRoutes = require('./routes/authRoutes');
 const fieldRoutes = require('./routes/fieldRoutes');

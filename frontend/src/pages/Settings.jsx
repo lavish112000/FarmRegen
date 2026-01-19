@@ -32,12 +32,12 @@ export default function Settings() {
 
                 <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-8">
                     <div className="flex items-center mb-8">
-                        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-2xl font-bold">
+                        <div className="w-20 h-20 bg-green-100 dark:bg-slate-700 rounded-full flex items-center justify-center text-green-600 dark:text-green-400 text-2xl font-bold">
                             {user?.full_name?.[0] || 'U'}
                         </div>
                         <div className="ml-6">
-                            <h2 className="text-xl font-bold text-gray-900">{user?.full_name}</h2>
-                            <p className="text-gray-500">{user?.email}</p>
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{user?.full_name}</h2>
+                            <p className="text-gray-500 dark:text-gray-400">{user?.email}</p>
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@ export default function Settings() {
                             value={formData.email}
                             disabled
                             icon={Mail}
-                            className="bg-gray-50"
+                            className="bg-gray-50 dark:bg-slate-700/50 dark:text-gray-400"
                         />
 
                         <Input

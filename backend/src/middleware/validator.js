@@ -25,10 +25,7 @@ const schemas = {
     // Field creation
     createField: Joi.object({
         name: Joi.string().min(2).max(100).required(),
-        geojson: Joi.object({
-            type: Joi.string().valid('Polygon', 'MultiPolygon').required(),
-            coordinates: Joi.array().required()
-        }).required(),
+        geojson: Joi.object().unknown().required(),
         hectares: Joi.number().min(0.01).max(10000).optional(),
         address: Joi.string().max(500).optional().allow('')
     }),

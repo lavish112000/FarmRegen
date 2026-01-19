@@ -56,7 +56,8 @@ function DrawControl({ onCreated }) {
             drawnItems.addLayer(layer);
 
             const geoJSON = layer.toGeoJSON();
-            onCreated(geoJSON);
+            // Extract just the geometry part (backend expects {type, coordinates}, not full Feature)
+            onCreated(geoJSON.geometry);
         });
 
         return () => {

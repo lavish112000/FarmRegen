@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/authMiddleware');
+const { analysisLimiter } = require('../middleware/rateLimiter');
 const earthEngineService = require('../services/earthEngine');
 const fieldModel = require('../models/fieldModel');
 const db = require('../config/db');
 
-// POST /api/analysis/:fieldId
-router.post('/:fieldId', verifyToken, async (req, res) => {
+// POST /api/analysis/:fieldId - Run analysis (with rate limiting)
+router.post('/:fieldId', verifyToken, analysisLimiter, async (req, res) => {
     try {
         const { fieldId } = req.params;
         const userId = req.user.id;

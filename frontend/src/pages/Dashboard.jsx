@@ -72,8 +72,9 @@ export default function Dashboard() {
             await api.post('/fields', {
                 name: newFieldName,
                 geojson: newFieldGeoJSON,
-                hectares: 0,
+                // hectares: 0, // Removed to allow backend to default to 0 and pass min(0.01) validation
                 address: ''
+
             });
             console.log("API request success"); // DEBUG
             setIsDrawMode(false);

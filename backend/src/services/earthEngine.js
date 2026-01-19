@@ -1,4 +1,5 @@
 const ee = require('@google/earthengine');
+const axios = require('axios');
 const privateKey = require('../../service-account.json');
 
 // Initialize Earth Engine
@@ -102,7 +103,7 @@ const getAnalysis = async (geoJSON) => {
     // We clip the image to the geometry for the visualization
     const visImage = ndvi.visualize(vizParams).clip(geometry);
 
-    const mapUrl = await new Promise((resolve, reject) => {
+    const tempUrl = await new Promise((resolve, reject) => {
         visImage.getThumbURL({
             dimensions: 500,
             region: geometry,
@@ -112,6 +113,17 @@ const getAnalysis = async (geoJSON) => {
             else resolve(url);
         });
     });
+
+    // Fetch the image content to convert to Base64 (Persistent)
+    let finalImageUrl = tempUrl;
+    try {
+        const imageResponse = await axios.get(tempUrl, { responseType: 'arraybuffer' });
+        const base64 = Buffer.from(imageResponse.data, 'binary').toString('base64');
+        finalImageUrl = `data:image/png;base64,${base64}`;
+        console.log("Successfully converted GEE image to Base64");
+    } catch (fetchErr) {
+        console.error("Failed to fetch/convert GEE image, falling back to temp URL:", fetchErr);
+    }
 
     // Get the date of the image
     const date = await new Promise((resolve, reject) => {
@@ -126,7 +138,7 @@ const getAnalysis = async (geoJSON) => {
         std_dev: stdDevNDVI,
         score: score,
         grade: grade,
-        image_url: mapUrl,
+        image_url: finalImageUrl,
         date: date
     };
 };

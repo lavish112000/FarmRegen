@@ -14,8 +14,16 @@ const errorHandler = (err, req, res, next) => {
     let error = { ...err };
     error.message = err.message;
 
-    // Log error for debugging (in production, use proper logger)
-    console.error('Error:', err);
+    // Log error using logger
+    const logger = require('../utils/logger');
+    logger.error('Error occurred:', {
+        message: err.message,
+        stack: err.stack,
+        url: req.originalUrl,
+        method: req.method,
+        ip: req.ip,
+        userId: req.user?.id
+    });
 
     // Mongoose bad ObjectId
     if (err.name === 'CastError') {

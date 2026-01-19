@@ -1,6 +1,11 @@
 const ee = require('@google/earthengine');
 const axios = require('axios');
-const privateKey = require('../../service-account.json');
+
+// Load service account from environment variables
+const privateKey = {
+    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+};
 
 // Initialize Earth Engine
 const initialize = () => {

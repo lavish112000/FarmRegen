@@ -1,9 +1,8 @@
-const express = require('express');
+const express = require('router');
 const router = express.Router();
 const verifyToken = require('../middleware/authMiddleware');
 const { analysisLimiter } = require('../middleware/rateLimiter');
 const earthEngineService = require('../services/earthEngine');
-const fieldModel = require('../models/fieldModel');
 const db = require('../config/db');
 
 // POST /api/analysis/:fieldId - Run analysis (with rate limiting)

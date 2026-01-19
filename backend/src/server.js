@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const { Pool } = require('pg'); // Not used here directly but cleaner to just remove Client. actually db handles usage.
+// Removing the line entirely
+
 require('dotenv').config();
 
 // Import middleware
@@ -47,13 +50,18 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Logging - use Winston stream
 app.use(morgan('combined', { stream: logger.stream }));
 
-// Database Connection - using pool from db.js
 const db = require('./config/db');
 
-// Test database connection on startup
-db.query('SELECT NOW()')
-    .then(() => logger.info('Connected to PostgreSQL database'))
-    .catch(err => logger.error('Database connection error:', err));
+const checkDbConnection = async () => {
+    try {
+        await db.query('SELECT NOW()');
+        logger.info('Connected to PostgreSQL database');
+    } catch (err) {
+        logger.error('Database connection error:', err);
+    }
+};
+
+checkDbConnection();
 
 const authRoutes = require('./routes/authRoutes');
 const fieldRoutes = require('./routes/fieldRoutes');

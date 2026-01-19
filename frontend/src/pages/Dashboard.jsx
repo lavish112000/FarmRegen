@@ -20,6 +20,7 @@ import {
     Plus,
     Loader2
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Dashboard() {
     // State
@@ -128,48 +129,73 @@ export default function Dashboard() {
 
                 {/* Overview Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 flex items-center justify-between hover:shadow-md transition-all"
+                    >
                         <div>
-                            <p className="text-sm font-medium text-gray-500">Total Fields</p>
-                            <p className="text-3xl font-bold text-gray-900 mt-1">{fields.length}</p>
+                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Fields</p>
+                            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-1">{fields.length}</p>
                         </div>
-                        <div className="p-3 bg-green-50 rounded-xl text-green-600">
+                        <div className="p-3 bg-green-50 dark:bg-green-900/30 rounded-xl text-green-600 dark:text-green-400">
                             <MapPin className="w-6 h-6" />
                         </div>
-                    </div>
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 flex items-center justify-between hover:shadow-md transition-all"
+                    >
                         <div>
-                            <p className="text-sm font-medium text-gray-500">Monitor Area</p>
-                            <p className="text-3xl font-bold text-gray-900 mt-1">{totalArea} <span className="text-sm font-semibold text-gray-400">ha</span></p>
+                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Monitor Area</p>
+                            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-1">{totalArea} <span className="text-sm font-semibold text-gray-400 dark:text-gray-500">ha</span></p>
                         </div>
-                        <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
+                        <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
                             <Sprout className="w-6 h-6" />
                         </div>
-                    </div>
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 flex items-center justify-between hover:shadow-md transition-all"
+                    >
                         <div>
-                            <p className="text-sm font-medium text-gray-500">Avg. Health</p>
-                            <p className="text-3xl font-bold text-gray-900 mt-1">{avgHealth || '-'}<span className="text-sm font-semibold text-gray-400">/100</span></p>
+                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Avg. Health</p>
+                            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-1">{avgHealth || '-'}<span className="text-sm font-semibold text-gray-400 dark:text-gray-500">/100</span></p>
                         </div>
-                        <div className="p-3 bg-yellow-50 rounded-xl text-yellow-600">
+                        <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-xl text-yellow-600 dark:text-yellow-400">
                             <Activity className="w-6 h-6" />
                         </div>
-                    </div>
-                    <div className="bg-gradient-to-br from-green-600 to-emerald-700 p-6 rounded-2xl shadow-lg text-white flex flex-col justify-center items-start">
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                        className="bg-gradient-to-br from-green-600 to-emerald-700 dark:from-emerald-700 dark:to-green-900 p-6 rounded-2xl shadow-lg text-white flex flex-col justify-center items-start"
+                    >
                         <p className="font-semibold text-lg">Next Scan Available</p>
                         <p className="text-green-100 text-sm mt-1">Satellite passes in 2 days</p>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Main Content: Map & List Side-by-Side */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[600px]">
 
                     {/* Map Column */}
-                    <div className="lg:col-span-2 flex flex-col h-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
-                        <div className="p-4 border-b border-gray-50 flex justify-between items-center bg-white z-10">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="lg:col-span-2 flex flex-col h-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden relative"
+                    >
+                        <div className="p-4 border-b border-gray-50 dark:border-slate-700/50 flex justify-between items-center bg-white dark:bg-slate-800 z-10">
                             <div>
-                                <h2 className="font-bold text-gray-800">Satellite Map</h2>
-                                <p className="text-xs text-gray-500">Draw polygons to register new fields</p>
+                                <h2 className="font-bold text-gray-800 dark:text-gray-100">Satellite Map</h2>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">Draw polygons to register new fields</p>
                             </div>
                         </div>
 
@@ -178,9 +204,9 @@ export default function Dashboard() {
                         </div>
 
                         {isDrawMode && (
-                            <div className="absolute top-20 right-4 z-[400] bg-white p-4 rounded-xl shadow-2xl border border-green-100 w-80 animate-scale-in">
+                            <div className="absolute top-20 right-4 z-[400] bg-white dark:bg-slate-800 p-4 rounded-xl shadow-2xl border border-green-100 dark:border-slate-700 w-80 animate-scale-in">
                                 <div className="flex justify-between items-center mb-3">
-                                    <h3 className="font-bold text-gray-900">New Field Detected</h3>
+                                    <h3 className="font-bold text-gray-900 dark:text-gray-100">New Field Detected</h3>
                                     <button onClick={() => { setIsDrawMode(false); setNewFieldGeoJSON(null) }} className="bg-gray-100 p-1 rounded-full"><Plus className="rotate-45 text-gray-500 w-4 h-4" /></button>
                                 </div>
                                 <Input
@@ -199,13 +225,18 @@ export default function Dashboard() {
                                 </Button>
                             </div>
                         )}
-                    </div>
+                    </motion.div>
 
                     {/* Field List Column */}
-                    <div className="flex flex-col h-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="p-5 border-b border-gray-50 flex justify-between items-center">
-                            <h2 className="font-bold text-gray-800 text-lg">My Fields</h2>
-                            <Button variant="ghost" size="sm" className="text-green-600"><Plus className="w-4 h-4 mr-1" /> Add</Button>
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.6 }}
+                        className="flex flex-col h-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden"
+                    >
+                        <div className="p-5 border-b border-gray-50 dark:border-slate-700/50 flex justify-between items-center">
+                            <h2 className="font-bold text-gray-800 dark:text-gray-100 text-lg">My Fields</h2>
+                            <Button variant="ghost" size="sm" className="text-green-600 dark:text-green-400"><Plus className="w-4 h-4 mr-1" /> Add</Button>
                         </div>
 
                         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -217,13 +248,13 @@ export default function Dashboard() {
                                 </div>
                             ) : (
                                 fields.map(field => (
-                                    <div key={field.id} className="group bg-gray-50 p-4 rounded-xl border border-transparent hover:border-green-200 hover:bg-green-50/50 transition-all duration-200 relative">
+                                    <div key={field.id} className="group bg-gray-50 dark:bg-slate-700/50 p-4 rounded-xl border border-transparent hover:border-green-200 dark:hover:border-green-500/30 hover:bg-green-50/50 dark:hover:bg-slate-700 transition-all duration-200 relative">
                                         <div className="flex justify-between items-start">
                                             <div className="flex items-start space-x-3">
-                                                <div className={`mt-1 w-2 h-2 rounded-full ${field.soil_health_score > 70 ? 'bg-green-500' : field.soil_health_score ? 'bg-yellow-500' : 'bg-gray-300'}`}></div>
+                                                <div className={`mt-1 w-2 h-2 rounded-full ${field.soil_health_score > 70 ? 'bg-green-500' : field.soil_health_score ? 'bg-yellow-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
                                                 <div>
-                                                    <h3 className="font-bold text-gray-800">{field.name}</h3>
-                                                    <p className="text-xs text-gray-500 mt-0.5">Updated: {new Date(field.created_at).toLocaleDateString()}</p>
+                                                    <h3 className="font-bold text-gray-800 dark:text-gray-100">{field.name}</h3>
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Updated: {new Date(field.created_at).toLocaleDateString()}</p>
                                                 </div>
                                             </div>
 
@@ -239,8 +270,8 @@ export default function Dashboard() {
 
                                         <div className="mt-4 flex items-center justify-between">
                                             <div className="flex flex-col">
-                                                <span className="text-xs font-medium text-gray-400 uppercase">Health Score</span>
-                                                <span className={`text-lg font-bold ${!field.soil_health_score ? 'text-gray-400' : field.soil_health_score > 70 ? 'text-green-600' : 'text-yellow-600'}`}>
+                                                <span className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase">Health Score</span>
+                                                <span className={`text-lg font-bold ${!field.soil_health_score ? 'text-gray-400 dark:text-gray-500' : field.soil_health_score > 70 ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
                                                     {field.soil_health_score || '--'}
                                                 </span>
                                             </div>
@@ -248,7 +279,7 @@ export default function Dashboard() {
                                             <Button
                                                 size="sm"
                                                 variant={field.soil_health_score ? "outline" : "primary"}
-                                                className={field.soil_health_score ? "bg-white" : "shadow-md shadow-green-200"}
+                                                className={field.soil_health_score ? "bg-white dark:bg-slate-600 dark:border-slate-500 dark:text-gray-200" : "shadow-md shadow-green-200 dark:shadow-none"}
                                                 onClick={() => analyzeField(field)}
                                                 isLoading={analyzingId === field.id}
                                             >
@@ -260,7 +291,7 @@ export default function Dashboard() {
                                 ))
                             )}
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </DashboardLayout>
         </ErrorBoundary>

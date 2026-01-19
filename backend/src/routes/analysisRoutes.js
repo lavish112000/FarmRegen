@@ -1,4 +1,4 @@
-const express = require('router');
+const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/authMiddleware');
 const { analysisLimiter } = require('../middleware/rateLimiter');

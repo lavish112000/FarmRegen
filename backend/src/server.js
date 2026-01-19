@@ -48,6 +48,7 @@ app.use(morgan('combined', { stream: logger.stream }));
 // Database Connection
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 const connectDB = async () => {
@@ -65,6 +66,7 @@ const authRoutes = require('./routes/authRoutes');
 const fieldRoutes = require('./routes/fieldRoutes');
 const analysisRoutes = require('./routes/analysisRoutes');
 const reportRoutes = require('./routes/reportRoutes');
+const diagnosticRoutes = require('./routes/diagnosticRoutes');
 const earthEngineService = require('./services/earthEngine');
 
 // Initialize Earth Engine
@@ -77,6 +79,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/fields', fieldRoutes);
 app.use('/api/analysis', analysisRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/diagnostic', diagnosticRoutes);
 
 
 app.get('/', (req, res) => {

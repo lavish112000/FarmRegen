@@ -36,8 +36,9 @@ function DrawControl({ onCreated }) {
             draw: {
                 polygon: {
                     allowIntersection: false,
-                    showArea: true,
+                    showArea: false, // Disabled due to "ReferenceError: type is not defined" in bundled leaflet-draw
                 },
+
                 rectangle: false,
                 circle: false,
                 circlemarker: false,

@@ -1,6 +1,7 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
 import MyFields from './pages/MyFields';
 import SoilAnalysis from './pages/SoilAnalysis';
@@ -13,7 +14,8 @@ import PublicOnlyRoute from './routes/PublicOnlyRoute';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      {/* Public Landing Page */}
+      <Route path="/" element={<PublicOnlyRoute><Landing /></PublicOnlyRoute>} />
       <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
       <Route path="/signup" element={<PublicOnlyRoute><Signup /></PublicOnlyRoute>} />
 

@@ -1,4 +1,5 @@
 const Field = require('../models/fieldModel');
+const logger = require('../utils/logger');
 
 // Calculate area roughly if not provided (optional, better done in PostGIS with ST_Area but requires casting to geography)
 // For MVP we accept hectares from client or store 0.
@@ -33,7 +34,7 @@ const createField = async (req, res) => {
 
         res.status(201).json(newField);
     } catch (err) {
-        console.error(err);
+        logger.error('Error creating field', { error: err.message });
         res.status(500).json({ message: 'Server error creating field' });
     }
 };
@@ -43,7 +44,7 @@ const getFields = async (req, res) => {
         const fields = await Field.findByUserId(req.user.id);
         res.json(fields);
     } catch (err) {
-        console.error(err);
+        logger.error('Error fetching fields', { error: err.message });
         res.status(500).json({ message: 'Server error fetching fields' });
     }
 };
@@ -56,7 +57,43 @@ const deleteField = async (req, res) => {
         }
         res.json({ message: 'Field deleted' });
     } catch (err) {
-        console.error(err);
+        logger.error('Error deleting field', { error: err.message });
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const updateField = async (req, res) => {
+    try {
+        const { name, address } = req.body;
+        const fieldId = req.params.id;
+        const userId = req.user.id;
+
+        if (!name && address === undefined) {
+            return res.status(400).json({ message: 'At least one field (name or address) is required' });
+        }
+
+        const updatedField = await Field.update(fieldId, userId, { name, address });
+        
+        if (!updatedField) {
+            return res.status(404).json({ message: 'Field not found or not authorized' });
+        }
+
+        res.json(updatedField);
+    } catch (err) {
+        logger.error('Error updating field', { error: err.message });
+        res.status(500).json({ message: 'Server error updating field' });
+    }
+};
+
+const getFieldById = async (req, res) => {
+    try {
+        const field = await Field.findById(req.params.id, req.user.id);
+        if (!field) {
+            return res.status(404).json({ message: 'Field not found' });
+        }
+        res.json(field);
+    } catch (err) {
+        logger.error('Error fetching field', { error: err.message });
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -64,5 +101,7 @@ const deleteField = async (req, res) => {
 module.exports = {
     createField,
     getFields,
-    deleteField
+    deleteField,
+    updateField,
+    getFieldById
 };

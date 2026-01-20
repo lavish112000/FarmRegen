@@ -40,6 +40,11 @@ const schemas = {
     updateProfile: Joi.object({
         full_name: Joi.string().min(2).max(100).optional(),
         phone: Joi.string().pattern(/^[0-9]{10}$/).optional().allow('')
+    }),
+
+    // Analysis validation
+    analyzeField: Joi.object({
+        fieldId: Joi.string().required() // Basic check, relying on controller DB lookup for 404
     })
 };
 
@@ -75,4 +80,37 @@ const validate = (schemaName) => {
     };
 };
 
-module.exports = { validate, schemas };
+// New middleware for parameter validation
+const validateParams = (schemaName) => {
+    return (req, res, next) => {
+        const schema = schemas[schemaName];
+
+        if (!schema) {
+            return res.status(500).json({ message: 'Validation schema not found' });
+        }
+
+        // Validate req.params against schema
+        const { error, value } = schema.validate(req.params, {
+            abortEarly: false,
+            stripUnknown: true
+        });
+
+        if (error) {
+            const errors = error.details.map(detail => ({
+                field: detail.path.join('.'),
+                message: detail.message
+            }));
+
+            return res.status(400).json({
+                message: 'Validation failed',
+                errors
+            });
+        }
+
+        // Update params with sanitized values
+        req.params = value;
+        next();
+    };
+};
+
+module.exports = { validate, validateParams, schemas };

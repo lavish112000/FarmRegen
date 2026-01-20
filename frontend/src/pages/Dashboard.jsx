@@ -7,7 +7,6 @@ import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import FieldMap from '../components/FieldMap';
 import { AnalysisModal } from '../components/AnalysisModal';
-import ErrorBoundary from '../components/ErrorBoundary';
 
 // Icons
 import {
@@ -116,8 +115,7 @@ export default function Dashboard() {
     };
 
     return (
-        <ErrorBoundary>
-            <DashboardLayout>
+        <DashboardLayout>
                 {/* ... (rest of the component structure remains, just wrapped) */}
 
                 {/* Analysis Result Modal */}
@@ -294,7 +292,6 @@ export default function Dashboard() {
                         </div>
                     </motion.div>
                 </div>
-            </DashboardLayout>
-        </ErrorBoundary>
+        </DashboardLayout>
     );
 }

@@ -10,11 +10,19 @@ const apiLimiter = rateLimit({
 });
 
 // Strict limiter for authentication routes
+const isDev = process.env.NODE_ENV !== 'production';
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // Limit each IP to 5 login attempts per windowMs
+    max: isDev ? 50 : 5, // Relax in dev to avoid frequent 429s
     message: 'Too many login attempts, please try again after 15 minutes.',
     skipSuccessfulRequests: true, // Don't count successful requests
+});
+
+// Separate limiter for refresh tokens (higher limit, lower risk)
+const refreshLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: isDev ? 200 : 30,
+    message: 'Too many token refresh attempts, please try again later.',
 });
 
 // Analysis limiter (satellite data is expensive)
@@ -27,5 +35,6 @@ const analysisLimiter = rateLimit({
 module.exports = {
     apiLimiter,
     authLimiter,
+    refreshLimiter,
     analysisLimiter
 };

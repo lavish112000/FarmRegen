@@ -13,7 +13,6 @@
     "dependencies": {
         "@google/earthengine": "^1.7.9",
         "axios": "^1.13.2",
-        "bcrypt": "^5.1.1",
         "bcryptjs": "^3.0.3",
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
@@ -25,8 +24,8 @@
         "morgan": "^1.10.0",
         "pdfkit": "^0.17.2",
         "pg": "^8.11.3",
-        "sequelize": "^6.37.1",
-        "winston": "^3.19.0"
+        "winston": "^3.19.0",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "nodemon": "^3.0.3"

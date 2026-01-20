@@ -36,8 +36,14 @@ CREATE TABLE IF NOT EXISTS field_analyses (
   field_id UUID REFERENCES fields(id) ON DELETE CASCADE,
   analysis_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   ndvi_mean FLOAT,
+  ndvi_stddev FLOAT,
+  ndmi_mean FLOAT,
+  evi_mean FLOAT,
+  savi_mean FLOAT,
   soil_score INTEGER,
+  moisture_status VARCHAR(50),
   satellite_image_url TEXT,
+  indices_data JSONB,  -- Store full indices data as JSON for flexibility
   notes TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_analyses_field_id ON field_analyses(field_id);

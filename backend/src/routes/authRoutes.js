@@ -3,19 +3,20 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const verifyToken = require('../middleware/authMiddleware');
 const { validate } = require('../middleware/validator');
-const { authLimiter } = require('../middleware/rateLimiter');
-
-// Apply rate limiting to all auth routes
-router.use(authLimiter);
+const { authLimiter, refreshLimiter } = require('../middleware/rateLimiter');
 
 // POST /api/auth/signup - with validation
-router.post('/signup', validate('signup'), authController.signup);
+router.post('/signup', authLimiter, validate('signup'), authController.signup);
 
 // POST /api/auth/login - with validation
-router.post('/login', validate('login'), authController.login);
+router.post('/login', authLimiter, validate('login'), authController.login);
+
+// POST /api/auth/refresh - refresh access token
+router.post('/refresh', refreshLimiter, authController.refreshToken);
 
 // Protected routes
 router.get('/me', verifyToken, authController.getMe);
 router.put('/profile', verifyToken, authController.updateProfile);
+router.put('/password', verifyToken, authController.changePassword);
 
 module.exports = router;

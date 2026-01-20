@@ -67,6 +67,7 @@ const authRoutes = require('./routes/authRoutes');
 const fieldRoutes = require('./routes/fieldRoutes');
 const analysisRoutes = require('./routes/analysisRoutes');
 const reportRoutes = require('./routes/reportRoutes');
+const exportRoutes = require('./routes/exportRoutes');
 const diagnosticRoutes = require('./routes/diagnosticRoutes');
 const earthEngineService = require('./services/earthEngine');
 
@@ -80,6 +81,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/fields', fieldRoutes);
 app.use('/api/analysis', analysisRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/export', exportRoutes);
 app.use('/api/diagnostic', diagnosticRoutes);
 
 

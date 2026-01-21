@@ -36,7 +36,7 @@ export default function Reports() {
         setIsExporting(prev => ({ ...prev, csv: true }));
         try {
             await exportCSV(selectedFieldFilter || null);
-        } catch (error) {
+        } catch {
             alert('Export failed. Please try again.');
         } finally {
             setIsExporting(prev => ({ ...prev, csv: false }));
@@ -47,14 +47,14 @@ export default function Reports() {
         setIsExporting(prev => ({ ...prev, excel: true }));
         try {
             await exportExcel(selectedFieldFilter || null);
-        } catch (error) {
+        } catch {
             alert('Export failed. Please try again.');
         } finally {
             setIsExporting(prev => ({ ...prev, excel: false }));
         }
     };
 
-    const filteredAnalyses = selectedFieldFilter 
+    const filteredAnalyses = selectedFieldFilter
         ? analyses.filter(a => a.field_id === selectedFieldFilter)
         : analyses;
 
@@ -94,8 +94,8 @@ export default function Reports() {
                             <option key={field.id} value={field.id}>{field.name}</option>
                         ))}
                     </select>
-                    <Button 
-                        variant="outline" 
+                    <Button
+                        variant="outline"
                         onClick={handleExportCSV}
                         disabled={isExporting.csv || analyses.length === 0}
                     >
@@ -106,7 +106,7 @@ export default function Reports() {
                         )}
                         Export CSV
                     </Button>
-                    <Button 
+                    <Button
                         onClick={handleExportExcel}
                         disabled={isExporting.excel || analyses.length === 0}
                     >
@@ -140,7 +140,7 @@ export default function Reports() {
                         </div>
                         <div>
                             <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                                {analyses.length > 0 
+                                {analyses.length > 0
                                     ? Math.round(analyses.reduce((sum, a) => sum + (a.soil_score || 0), 0) / analyses.length)
                                     : 0}
                             </p>
@@ -203,7 +203,7 @@ export default function Reports() {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">
-                                            {analysis.ndvi_mean?.toFixed(3) || 'N/A'}
+                                            {analysis.ndvi_mean !== null && analysis.ndvi_mean !== undefined ? Number(analysis.ndvi_mean).toFixed(3) : 'N/A'}
                                         </td>
                                         <td className="px-4 py-3">
                                             <div className="flex gap-2">

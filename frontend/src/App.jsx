@@ -11,22 +11,27 @@ import Learn from './pages/Learn';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicOnlyRoute from './routes/PublicOnlyRoute';
 
+import { Analytics } from "@vercel/analytics/react";
+
 function App() {
   return (
-    <Routes>
-      {/* Public Landing Page */}
-      <Route path="/" element={<PublicOnlyRoute><Landing /></PublicOnlyRoute>} />
-      <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
-      <Route path="/signup" element={<PublicOnlyRoute><Signup /></PublicOnlyRoute>} />
+    <>
+      <Routes>
+        {/* Public Landing Page */}
+        <Route path="/" element={<PublicOnlyRoute><Landing /></PublicOnlyRoute>} />
+        <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
+        <Route path="/signup" element={<PublicOnlyRoute><Signup /></PublicOnlyRoute>} />
 
-      {/* Protected Dashboard Routes */}
-      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/fields" element={<ProtectedRoute><MyFields /></ProtectedRoute>} />
-      <Route path="/analysis" element={<ProtectedRoute><SoilAnalysis /></ProtectedRoute>} />
-      <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
-      <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
-      <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-    </Routes>
+        {/* Protected Dashboard Routes */}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/fields" element={<ProtectedRoute><MyFields /></ProtectedRoute>} />
+        <Route path="/analysis" element={<ProtectedRoute><SoilAnalysis /></ProtectedRoute>} />
+        <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+        <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+      </Routes>
+      <Analytics />
+    </>
   );
 }
 

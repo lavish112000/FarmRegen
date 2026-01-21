@@ -4,16 +4,16 @@ import { useState } from 'react';
 import { downloadReport } from '../services/api';
 
 export function AnalysisModal({ isOpen, onClose, analysis, fieldName }) {
-    if (!isOpen || !analysis) return null;
-
     const [isDownloading, setIsDownloading] = useState(false);
     const [activeTab, setActiveTab] = useState('overview');
+
+    if (!isOpen || !analysis) return null;
 
     const handleDownload = async () => {
         try {
             setIsDownloading(true);
             await downloadReport(analysis.id, fieldName);
-        } catch (error) {
+        } catch {
             alert('Failed to download report. Please try again.');
         } finally {
             setIsDownloading(false);
@@ -26,16 +26,19 @@ export function AnalysisModal({ isOpen, onClose, analysis, fieldName }) {
     const getScoreLabel = (s) => s > 70 ? 'Excellent' : s > 40 ? 'Moderate' : 'Critical';
 
     // Parse indices data if available
-    const indices = analysis.indices_data ? 
-        (typeof analysis.indices_data === 'string' ? JSON.parse(analysis.indices_data) : analysis.indices_data) 
+    const indices = analysis.indices_data ?
+        (typeof analysis.indices_data === 'string' ? JSON.parse(analysis.indices_data) : analysis.indices_data)
         : analysis.indices || null;
 
     // Helper to format index values
-    const formatIndex = (value) => value !== null && value !== undefined ? value.toFixed(3) : 'N/A';
+    const formatIndex = (value) => {
+        const num = Number(value);
+        return value !== null && value !== undefined && !isNaN(num) ? num.toFixed(3) : 'N/A';
+    };
 
     // Moisture status color
     const getMoistureColor = (status) => {
-        switch(status) {
+        switch (status) {
             case 'Adequate': return 'text-blue-600 bg-blue-100';
             case 'Moderate': return 'text-cyan-600 bg-cyan-100';
             case 'Low': return 'text-yellow-600 bg-yellow-100';
@@ -52,7 +55,7 @@ export function AnalysisModal({ isOpen, onClose, analysis, fieldName }) {
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Analysis Report</h2>
                         <p className="text-gray-500 dark:text-gray-400 mt-1">
-                            Field: <span className="font-semibold text-gray-800 dark:text-gray-200">{fieldName}</span> • 
+                            Field: <span className="font-semibold text-gray-800 dark:text-gray-200">{fieldName}</span> •
                             Date: {new Date(analysis.analysis_date).toLocaleDateString()}
                         </p>
                     </div>
@@ -63,23 +66,21 @@ export function AnalysisModal({ isOpen, onClose, analysis, fieldName }) {
 
                 {/* Tabs */}
                 <div className="flex border-b border-gray-100 dark:border-gray-700 px-6">
-                    <button 
+                    <button
                         onClick={() => setActiveTab('overview')}
-                        className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
-                            activeTab === 'overview' 
-                                ? 'border-green-500 text-green-600' 
-                                : 'border-transparent text-gray-500 hover:text-gray-700'
-                        }`}
+                        className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${activeTab === 'overview'
+                            ? 'border-green-500 text-green-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700'
+                            }`}
                     >
                         Overview
                     </button>
-                    <button 
+                    <button
                         onClick={() => setActiveTab('indices')}
-                        className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
-                            activeTab === 'indices' 
-                                ? 'border-green-500 text-green-600' 
-                                : 'border-transparent text-gray-500 hover:text-gray-700'
-                        }`}
+                        className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${activeTab === 'indices'
+                            ? 'border-green-500 text-green-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700'
+                            }`}
                     >
                         Vegetation Indices
                     </button>
@@ -99,11 +100,10 @@ export function AnalysisModal({ isOpen, onClose, analysis, fieldName }) {
                                         </span>
                                         <span className="text-gray-400 font-medium">/ 100</span>
                                     </div>
-                                    <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold mt-2 ${
-                                        score > 70 ? 'bg-green-100 text-green-700' :
+                                    <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold mt-2 ${score > 70 ? 'bg-green-100 text-green-700' :
                                         score > 40 ? 'bg-yellow-100 text-yellow-700' :
-                                        'bg-red-100 text-red-700'
-                                    }`}>
+                                            'bg-red-100 text-red-700'
+                                        }`}>
                                         {getScoreLabel(score)} Condition
                                     </div>
                                     <p className="mt-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
